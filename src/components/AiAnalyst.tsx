@@ -42,38 +42,39 @@ export default function AiAnalyst() {
     setIsLoading(true);
 
     try {
-      // Package conversation history
-      const chatHistory = messages.map(msg => ({
-        role: msg.role,
-        text: msg.text
-      }));
-
-      const response = await fetch("/api/analyze", {
+      // Vercel 환경변수나 코드 내에 심겨진 API 키를 활용해 구글 서버로 직접 쏩니다.
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${import.meta.env.VITE_GEMINI_API_KEY || "AIzaSy..."}`, { // ※ 여기에 API 키를 입력하세요!
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json"
+        },
         body: JSON.stringify({
-          message: textToSend,
-          chatHistory
+          contents: [{
+            parts: [{ text: userInput }] // userMessage.text로 수정
+          }]
         })
       });
 
       const data = await response.json();
 
-      if (!response.ok || !data.success) {
-        throw new Error(data.error || "AI 분석 서버와 연결하는 과정에서 문제가 발생했습니다.");
+      // 제미나이 공식 응답 구조에서 텍스트 추출하기
+      if (!data.candidates || !data.candidates[0].content || !data.candidates[0].content.parts) {
+        throw new Error("AI 응답 데이터 구조가 올바르지 않습니다.");
       }
+
+      const aiResponse = data.candidates[0].content.parts[0].text;
 
       const botMessage: ChatMessage = {
         id: `bot-${Date.now()}`,
         role: "model",
-        text: data.text,
+        text: aiResponse,
         timestamp: new Date()
       };
 
       setMessages(prev => [...prev, botMessage]);
     } catch (err: any) {
       console.error(err);
-      setError(err.message || "서버 통신 실패");
+      setError(err.message || "AI 분석 서버와 연결하는 과정에서 문제가 발생했습니다.");
     } finally {
       setIsLoading(false);
     }
@@ -233,21 +234,4 @@ export default function AiAnalyst() {
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyDown={handleKeyPress}
                 placeholder="문헌정보학 분석 연구 및 통계에 관해 질문하세요..."
-                className="flex-1 bg-white dark:bg-zinc-900 text-apple-text dark:text-white px-4 py-2.5 rounded-xl border border-[#D2D2D7] dark:border-zinc-800 text-xs focus:ring-1 focus:ring-apple-blue outline-none transition-all dark:placeholder:text-zinc-500"
-                disabled={isLoading}
-              />
-              <button
-                onClick={() => handleSendMessage()}
-                disabled={isLoading || !inputMessage.trim()}
-                className="bg-apple-blue hover:bg-[#0071E3]/90 text-white p-2.5 px-4 rounded-xl text-xs font-semibold cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center shrink-0"
-              >
-                <Send className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-  );
-}
+                className="flex-1 bg-white dark:bg-zinc-900 text-apple-text dark:text-white px-4 py-2.5 rounded-xl
