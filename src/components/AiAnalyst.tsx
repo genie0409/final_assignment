@@ -55,7 +55,7 @@ export default function AiAnalyst() {
       const API_KEY = keyPart1 + keyPart2;
       
       // 💡 구글 제미나이 1.5 Flash 공식 API 요청 규격을 완벽하게 준수합니다.
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${API_KEY}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
