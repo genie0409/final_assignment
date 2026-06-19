@@ -100,7 +100,7 @@ export default function DataSection() {
           <div className="w-full flex flex-col justify-center items-center p-4">
             {!imgError ? (
               <img 
-                src="/youth_reading_vs_internet_2.png" 
+                src="/youth_reading_vs_internet.png" 
                 alt="청소년 독서율 및 인터넷·스마트폰 과의존 추이 (2013-2025)"
                 onError={() => setImgError(true)}
                 id="report-visual-image"
