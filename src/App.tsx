@@ -68,8 +68,8 @@ export default function App() {
               {/* Document Download Buttons Row */}
               <div className="flex flex-wrap items-center gap-3 pt-2">
                 <a
-                  href="#"
-                  target="_blank"
+                  href="./analyze_report.pdf"
+                  download="analyze_report.pdf"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-5 py-2.5 bg-white dark:bg-zinc-900 border border-[#D2D2D7] dark:border-[#2C2C2E] hover:border-apple-blue dark:hover:border-apple-blue shadow-sm hover:shadow-md hover:-translate-y-0.5 rounded-full text-xs font-bold text-[#1D1D1F] dark:text-zinc-200 transition-all cursor-pointer"
                   title="GitHub 연결 및 분석보고서 다운로드"
