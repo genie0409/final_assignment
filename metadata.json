@@ -1,0 +1,6 @@
+{
+  "name": "Youth Reading & Overdependence Portfolio",
+  "description": "An interactive portfolio analyzing the correlation between youth reading rates and smartphone overdependence, based on MCST and MSIT indicators.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
