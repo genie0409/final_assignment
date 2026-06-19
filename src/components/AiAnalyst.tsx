@@ -44,7 +44,7 @@ export default function AiAnalyst() {
     try {
       // ⭐ [긴급 변경] 백엔드를 거치지 않고 구글 제미나이 API 서버로 다이렉트 통신합니다.
       // ⭐ 아래 "AIzaSy..." 자리에 진짜 제미나이 API 키 문자열을 따옴표 안에 입력하세요!
-      const API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "AQ.Ab8RN6KCOPPKmf-oXSLnZZozeGYlojD0pZ36wOT4Fz_f91Cxng"; 
+      const API_KEY = import.meta.env.VITE_GEMINI_API_KEY || ""; 
       
       const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
         method: "POST",
